@@ -10,9 +10,10 @@ import SocketServer
 
 class XmlStreamDumpServer(SocketServer.StreamRequestHandler):
     def handle(self):
-        print ("New connection")
+        print ("<!-- New connection -->")
         parser=xml.sax.make_parser()
         parser.setFeature(xml.sax.expatreader.feature_external_ges, 0)
+        parser.setFeature(xml.sax.handler.feature_namespaces, 1)
         parser.document_closed = False
         xmlevent_handler = XmlSaxDumper()
         xmlevent_handler.setParser(parser)
@@ -27,4 +28,5 @@ class XmlStreamDumpServer(SocketServer.StreamRequestHandler):
 if __name__ == '__main__':
     tcpserver =SocketServer.TCPServer(('0.0.0.0',int(sys.argv[1])),XmlStreamDumpServer)
     #serversocket = socket.socket()
+    tcpserver.socket.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,True)
     tcpserver.serve_forever() 
