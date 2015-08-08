@@ -16,7 +16,7 @@ class XmlSaxDumper(xml.sax.ContentHandler):
         for (ak,av) in attrs.items():
             print ("<Attribute name=%s>%s</Attribute>" % ( qa(ak), escape(av) ) ) 
     def startElementNS(self, name, qname, attrs):
-        print ("<ElementNS name=%s namespace=%s qname=%s>" %(qa(name[1]),qa(name[0]), qa(str(qname))))
+        print ("<ElementNS name=%s namespace=%s qname=%s>" %(qa(str(name[1])),qa(str(name[0])), qa(str(qname))))
         for (ak,av) in attrs.items():
             print ("<Attribute name=%s>%s</Attribute>" % ( qa(str(ak)), escape(str(av)) ) ) 
 
