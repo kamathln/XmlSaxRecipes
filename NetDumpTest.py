@@ -21,9 +21,11 @@ class XmlStreamDumpServer(SocketServer.StreamRequestHandler):
         while True:
             rcvd=self.request.recv(256)
             parser.feed(rcvd)
-            if parser.document_closed:
+            if parser.document_closed or not rcvd:
                 parser.close()
+                print ("<!-- parsing done -->")
                 break
+            
 
 if __name__ == '__main__':
     tcpserver =SocketServer.TCPServer(('0.0.0.0',int(sys.argv[1])),XmlStreamDumpServer)
